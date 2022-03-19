@@ -17,7 +17,8 @@ jobs:
         repository: nvdaes/nvdaAddonWorkflows
     - name: Checkout code
       uses: actions/checkout@v3
-      path: code
+      with:
+        path: code
     - name: Set up Python 3.7
       uses: actions/setup-python@v3
       with:
