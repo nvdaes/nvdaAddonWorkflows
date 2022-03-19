@@ -4,10 +4,9 @@ on:
   workflow_call:
 
 jobs:
-  pre-release:
-    name: Pre Release
+  l10n:
+    name: l10n
     runs-on: ubuntu-latest
-    steps:
     - name: Checkout code
       uses: actions/checkout@v3
     - name: Push l10n updates
@@ -20,7 +19,15 @@ jobs:
         git commit -m "Update translations"
         git pull
         git push
-        exit 0
+
+  pre-release:
+    name: Pre Release
+    needs: l10n
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
     - name: Set up Python 3.8
       uses: actions/setup-python@v3
       with:
