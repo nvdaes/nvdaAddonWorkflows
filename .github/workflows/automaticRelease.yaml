@@ -20,22 +20,19 @@ jobs:
         git commit -m "Update translations"
         git pull
         git push
+        exit 0
     - name: Set up Python 3.8
-      if: always()
       uses: actions/setup-python@v3
       with:
         python-version: 3.8
     - name: Install dependencies
-      if: always()
       run: |
         pip install scons markdown
         sudo apt update
         sudo apt install gettext
     - name: Build
-      if: always()
       run: scons version=${{ github.sha }}
     - name: Automatic release
-      if: always()
       uses: marvinpinto/action-automatic-releases@latest
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
