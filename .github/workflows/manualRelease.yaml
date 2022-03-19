@@ -2,6 +2,7 @@ name: Manual release
 
 on:
   workflow_call:
+  workflow_dispatch:
     inputs:
       version:
         description: 'Add-on version'
