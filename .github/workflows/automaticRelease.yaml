@@ -1,4 +1,4 @@
-name: pre-release
+name: automatic-release
 
 on:
   workflow_call:

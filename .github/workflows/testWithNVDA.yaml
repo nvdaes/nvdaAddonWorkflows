@@ -26,14 +26,14 @@ jobs:
     - name: Build add-on
       run: scons version=${{ github.sha }}
     - name: Upload add-on
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: nvda-addon
         path: "*.nvda-addon"
     - name: Build pot
       run: scons pot version=${{ github.sha }}
     - name: Upload pot
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: pot-file
         path: "*.pot"
@@ -63,11 +63,11 @@ jobs:
       run: scons source
       shell: cmd
     - name: Download add-on
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact   @v3
       with:
         name: nvda-addon
     - name: Download pot
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: pot-file
     - name: Copy add-on
@@ -85,7 +85,7 @@ jobs:
         ping 127.0.0.1 /n 20
       shell: cmd
     - name: Upload log
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: nvda-log
         path: source\nvda.log
