@@ -7,6 +7,7 @@ jobs:
   l10n:
     name: l10n
     runs-on: ubuntu-latest
+    steps:
     - name: Checkout code
       uses: actions/checkout@v3
     - name: Push l10n updates
