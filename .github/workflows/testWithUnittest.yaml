@@ -1,0 +1,31 @@
+name: Test with unittest
+
+on:
+  workflow_call:
+
+jobs:
+
+  test:
+
+    runs-on: windows-latest
+
+    steps:
+
+    - name: Checkout reusable workflows
+      uses: actions/checkout@v3
+      with:
+        repository: nvdaes/nvdaAddonWorkflows
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        path: code
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.7
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+    - name: Lint tests
+      run: flake8 code/tests
+    - name: Run tests
+      run: python unittest -m discover
