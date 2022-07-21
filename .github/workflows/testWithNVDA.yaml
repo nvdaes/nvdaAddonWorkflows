@@ -49,18 +49,29 @@ jobs:
 
     steps:
     
+    - name: Cache NVDA
+      id: cache-nvda
+      uses: actions/cache@v3
+      with:
+        path: nvda
+        key: ${{ runner.os }}-nvda-${{ hashFiles('**/buildVersion.py') }}
     - name: Set up Python 3.7 x86
       uses: actions/setup-python@v3
       with:
         python-version: 3.7
         architecture: x86
     - name: Checkout NVDA
+      if: steps.cache-nvda.outputs.cache-hit != 'true'
       uses: actions/checkout@v3
       with:
         repository: nvaccess/nvda
         submodules: true
+        path: nvda
     - name: Prepare NVDA's source tree
-      run: scons source
+      if: steps.cache-nvda.outputs.cache-hit != 'true'
+      run: |
+        cd nvda
+        scons source
       shell: cmd
     - name: Download add-on
       uses: actions/download-artifact@v3
@@ -73,14 +84,16 @@ jobs:
     - name: Copy add-on
       run: |
         move *.nvda-addon addon.zip
-        Expand-Archive addon.zip source\userConfig\addons\addon
+        Expand-Archive addon.zip nvda\source\userConfig\addons\addon
     - name: Start NVDA
       run: |
+        cd source
         runnvda -m --debug-logging
         ping 127.0.0.1 /n 20
       shell: cmd
     - name: Quit NVDA
       run: |
+        cd source
         runnvda -q
         ping 127.0.0.1 /n 20
       shell: cmd
@@ -91,7 +104,7 @@ jobs:
         path: source\nvda.log
     - name: Check pot
       run: |
-        move *.pot tests\nvda.pot
+        move *.pot nvda\tests\nvda.pot
         cd tests
         python checkPot.py nvda.pot > potResults.txt
         type potResults.txt
