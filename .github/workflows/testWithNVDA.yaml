@@ -105,7 +105,7 @@ jobs:
     - name: Check pot
       run: |
         move *.pot nvda\tests\nvda.pot
-        cd tests
+        cd nvda\tests
         python checkPot.py nvda.pot > potResults.txt
         type potResults.txt
         If (Select-String -Path potResults.txt -Pattern 'Message has no translator comment' -SimpleMatch) {exit 1}
