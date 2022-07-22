@@ -48,14 +48,25 @@ jobs:
     runs-on: windows-2019
 
     steps:
-    
+
+    - name: Get last release
+      uses: actions/github-script@v6
+      id: get-last-release
+      with:
+        script: |
+          await github.request('GET /repos/{owner}/{repo}/releases/latest', {
+            owner: 'nvaccess',
+            repo: 'nvda'
+          })
+
     - name: Cache NVDA
       id: cache-nvda
       uses: actions/cache@v3
       with:
         path: nvda
-        key: ${{ runner.os }}-nvda-${{ hashFiles('**/buildVersion.py') }}
+        key: ${{ runner.os }}-nvda-${{steps.get-last-release.outputs.result.data.tag_name }}
     - name: Set up Python 3.7 x86
+      if: steps.cache-nvda.outputs.cache-hit != 'true'
       uses: actions/setup-python@v3
       with:
         python-version: 3.7
@@ -67,6 +78,7 @@ jobs:
         repository: nvaccess/nvda
         submodules: true
         path: nvda
+        ref: {{steps.get-last-release.outputs.result.data.tag_name }}
     - name: Prepare NVDA's source tree
       if: steps.cache-nvda.outputs.cache-hit != 'true'
       run: |
@@ -102,10 +114,13 @@ jobs:
       with:
         name: nvda-log
         path: source\nvda.log
+    - name: Remove add-on
+      run: Remove-Item nvda\source\userConfig\addons\addon -Recurse
     - name: Check pot
       run: |
         move *.pot nvda\tests\nvda.pot
         cd nvda\tests
         python checkPot.py nvda.pot > potResults.txt
         type potResults.txt
+        Remove-Item nvda.pot
         If (Select-String -Path potResults.txt -Pattern 'Message has no translator comment' -SimpleMatch) {exit 1}
