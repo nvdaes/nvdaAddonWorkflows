@@ -89,13 +89,13 @@ jobs:
         Expand-Archive addon.zip nvda\source\userConfig\addons\addon
     - name: Start NVDA
       run: |
-        cd nvda\source
+        cd nvda
         runnvda -m --debug-logging
         ping 127.0.0.1 /n 20
       shell: cmd
     - name: Quit NVDA
       run: |
-        cd nvda\source
+        cd nvda
         runnvda -q
         ping 127.0.0.1 /n 20
       shell: cmd
