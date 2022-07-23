@@ -54,7 +54,7 @@ jobs:
       id: get-last-release
       with:
         script: |
-          await github.request('GET /repos/{owner}/{repo}/releases/latest') {
+          await github.request('GET /repos/{owner}/{repo}/releases/latest', {
             owner: 'nvaccess',
             repo: 'nvda'
           })
