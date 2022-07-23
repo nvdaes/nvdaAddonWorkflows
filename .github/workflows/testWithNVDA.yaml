@@ -64,7 +64,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: nvda
-        key: ${{ runner.os }}-nvda-${{steps.get-last-release.outputs.result.data.tag_name }}
+        key: ${{ runner.os }}-nvda-${{ steps.get-last-release.outputs.result.data.tag_name }}
     - name: Set up Python 3.7 x86
       if: steps.cache-nvda.outputs.cache-hit != 'true'
       uses: actions/setup-python@v3
@@ -78,7 +78,7 @@ jobs:
         repository: nvaccess/nvda
         submodules: true
         path: nvda
-        ref: {{steps.get-last-release.outputs.result.data.tag_name }}
+        href: {{steps.get-last-release.outputs.result.data.tag_name }}
     - name: Prepare NVDA's source tree
       if: steps.cache-nvda.outputs.cache-hit != 'true'
       run: |
