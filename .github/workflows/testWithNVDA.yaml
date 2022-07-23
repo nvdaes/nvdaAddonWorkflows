@@ -103,7 +103,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: nvda-log
-        path: source\nvda.log
+        path: nvda\source\nvda.log
     - name: Remove add-on
       run: Remove-Item nvda\source\userConfig\addons\addon -Recurse
     - name: Check pot
