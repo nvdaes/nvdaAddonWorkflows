@@ -22,7 +22,9 @@ jobs:
         git push
     - name: Report that there aren't translations to push
       if: failure()
-      run: echo "No translations to push"
+      run: |
+        echo "No translations to push"
+        exit 0
 
   pre-release:
     name: Pre Release
