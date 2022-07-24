@@ -20,6 +20,9 @@ jobs:
         git commit -m "Update translations"
         git pull
         git push
+    - name: Report that there aren't translations to push
+    if: failure()
+    run: echo "No translations to push"
 
   pre-release:
     name: Pre Release
