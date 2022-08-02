@@ -1,0 +1,46 @@
+name: Generate NVDAoutputs
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  nvda:
+  
+    name: NVDA
+  
+    runs-on: windows-2019
+
+    steps:
+    - name: Setup Python 3.7
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.7
+        architecture: x86
+    - name: Checkout NVDA
+      uses: actions/checkout@v3
+      with:
+        repository: nvaccess/nvda
+        submodules: true
+        path: nvda
+    - name: Prepare NVDA's source tree
+      run: |
+        cd nvda
+        scons source
+      shell: cmd
+    - name: Build dev docs
+      run: |
+        cd nvda
+        scons devDocs
+      shell: cmd
+    - name: Build dist
+      run: |
+        cd nvda
+        scons dist
+        scons launcher
+      shell: cmd
+    - name: Upload outputs
+      uses: actions/upload-artifact@v3
+      with:
+        name: nvda-outputs
+        path: nvda\output
