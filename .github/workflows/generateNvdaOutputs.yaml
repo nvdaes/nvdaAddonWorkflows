@@ -29,8 +29,10 @@ jobs:
         cd nvda
         scons source
       shell: cmd
+    - Create archive
+      run: Compress-Archive nvda nvda.zip
     - name: Upload outputs
       uses: actions/upload-artifact@v3
       with:
         name: nvda-outputs
-        path: nvda
+        path: nvda.zip
