@@ -20,7 +20,8 @@ jobs:
     - name: Checkout NVDA
       uses: actions/checkout@v3
       with:
-        repository: nvaccess/nvda
+        repository: nvdaes/nvda
+        ref: addonStore-base
         submodules: true
         path: nvda
     - name: Prepare NVDA's source tree
@@ -28,19 +29,8 @@ jobs:
         cd nvda
         scons source
       shell: cmd
-    - name: Build dev docs
-      run: |
-        cd nvda
-        scons devDocs
-      shell: cmd
-    - name: Build dist
-      run: |
-        cd nvda
-        scons dist
-        scons launcher
-      shell: cmd
     - name: Upload outputs
       uses: actions/upload-artifact@v3
       with:
         name: nvda-outputs
-        path: nvda\output
+        path: nvda
