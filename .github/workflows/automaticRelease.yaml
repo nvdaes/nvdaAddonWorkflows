@@ -2,7 +2,8 @@ name: automatic-release
 
 on:
   workflow_call:
-
+  workflow_dispatch:
+  
 jobs:
   l10n:
     name: l10n
@@ -20,17 +21,11 @@ jobs:
         git commit -m "Update translations"
         git pull
         git push
-    - name: Report that there aren't translations to push
-      if: failure()
-      run: |
-        echo "No translations to push"
-        exit 0
 
   pre-release:
     name: Pre Release
     needs: l10n
     runs-on: ubuntu-latest
-    if: always()
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
