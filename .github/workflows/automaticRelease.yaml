@@ -6,6 +6,7 @@ on:
 jobs:
   l10n:
     name: l10n
+    continue-on-error: true
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -24,7 +25,6 @@ jobs:
   pre-release:
     name: Pre Release
     needs: l10n
-    if: ${{ always }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
