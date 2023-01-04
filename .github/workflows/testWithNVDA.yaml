@@ -58,7 +58,7 @@ jobs:
             owner: 'nvaccess',
             repo: 'nvda'
           })
-          return result.tag_name
+          return result.data.tag_name
 
 
     - name: Cache NVDA
