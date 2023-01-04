@@ -51,10 +51,11 @@ jobs:
 
     - name: Get last release
       id: get-last-release
-      uses: pozetroninc/github-action-get-latest-release@master
-      with:
-        repository: nvaccess/nvda
-        excludes: prerelease, draft
+      uses: rez0n/actions-github-release@main
+      env:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        repository: "nvaccess/nvda"
+        type: "stable"
     
     - name: Cache NVDA
       id: cache-nvda
