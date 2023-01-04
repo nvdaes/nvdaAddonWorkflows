@@ -51,17 +51,22 @@ jobs:
 
     - name: Get last release
       id: get-last-release
-      uses: pozetroninc/github-action-get-latest-release@master
+      uses: actions/github-script@v6
       with:
-        repository: nvaccess/nvda
-        excludes: prerelease, draft
-    
+        script: |
+          const result = await github.request('GET /repos/{owner}/{repo}/releases/latest', {
+            owner: 'nvaccess',
+            repo: 'nvda'
+          })
+          return result
+
+
     - name: Cache NVDA
       id: cache-nvda
       uses: actions/cache@v3
       with:
         path: nvda
-        key: ${{ runner.os }}-nvda-${{ steps.get-last-release.outputs.release }}
+        key: ${{ runner.os }}-nvda-${{ steps.get-last-release.outputs.result }}
     - name: Set up Python 3.7 x86
       if: steps.cache-nvda.outputs.cache-hit != 'true'
       uses: actions/setup-python@v3
