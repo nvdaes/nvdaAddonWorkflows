@@ -59,6 +59,7 @@ jobs:
             repo: 'nvda'
           })
           return result.data.tag_name
+        result-encoding: string
 
 
     - name: Cache NVDA
