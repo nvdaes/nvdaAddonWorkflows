@@ -12,17 +12,17 @@ jobs:
     steps:
 
     - name: Checkout reusable workflows
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: nvdaes/nvdaAddonWorkflows
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         path: code
-    - name: Set up Python 3.7
-      uses: actions/setup-python@v4
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5
       with:
-        python-version: 3.7
+        python-version: 3.11
     - name: Install dependencies
       run: pip install -r requirements.txt
     - name: Lint

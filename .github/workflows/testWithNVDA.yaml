@@ -13,11 +13,11 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v4
+      uses: actions/checkout@v4
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5
       with:
-        python-version: 3.8
+        python-version: 3.11
     - name: Install dependencies
       run: |
         pip install scons markdown
@@ -26,14 +26,14 @@ jobs:
     - name: Build add-on
       run: scons version=${{ github.sha }}
     - name: Upload add-on
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: nvda-addon
         path: "*.nvda-addon"
     - name: Build pot
       run: scons pot version=${{ github.sha }}
     - name: Upload pot
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: pot-file
         path: "*.pot"
